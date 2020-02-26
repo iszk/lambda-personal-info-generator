@@ -1,29 +1,19 @@
+import json
 from chalice import Chalice
+from chalicelib import dummy
 
 app = Chalice(app_name='dummydata')
-
 
 @app.route('/')
 def index():
     return {'hello': 'world'}
 
+@app.route('/random_lead')
+def random_lead():
+    # qp = app.current_request.query_params
+    # 何が設定できたら嬉しい？
+    #   個数(0-2くらい？)
+    # state = app.current_request.query_params['state']
+    lead = dummy.get_random_lead()
 
-# The view function above will return {"hello": "world"}
-# whenever you make an HTTP GET request to '/'.
-#
-# Here are a few more examples:
-#
-# @app.route('/hello/{name}')
-# def hello_name(name):
-#    # '/hello/james' -> {"hello": "james"}
-#    return {'hello': name}
-#
-# @app.route('/users', methods=['POST'])
-# def create_user():
-#     # This is the JSON body the user sent in their POST request.
-#     user_as_json = app.current_request.json_body
-#     # We'll echo the json body back to the user in a 'user' key.
-#     return {'user': user_as_json}
-#
-# See the README documentation for more examples.
-#
+    return json.dumps(lead, ensure_ascii=False)
